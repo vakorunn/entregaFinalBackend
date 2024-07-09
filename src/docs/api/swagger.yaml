@@ -1,0 +1,129 @@
+openapi: 3.0.1
+info:
+  title: Documentación de la API
+  description: API para la gestión de usuarios
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 60d21b4667d0d8992e610c85
+        username:
+          type: string
+          example: johndoe
+        email:
+          type: string
+          example: johndoe@example.com
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        role:
+          type: string
+          example: user
+        age:
+          type: integer
+          example: 30
+        phoneNumber:
+          type: string
+          example: '+1234567890'
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 60d21b4967d0d8992e610c87
+        name:
+          type: string
+          example: Product 1
+        price:
+          type: number
+          example: 10.99
+        description:
+          type: string
+          example: A sample product
+        category:
+          type: string
+          example: Category 1
+        stock:
+          type: integer
+          example: 100
+        owner:
+          type: string
+          example: 60d21b4667d0d8992e610c85
+
+paths:
+  /api/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/login:
+    post:
+      summary: Log in a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: johndoe@example.com
+                password:
+                  type: string
+                  example: password123
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/products:
+    post:
+      summary: Create a new product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /api/products/{productId}:
+    delete:
+      summary: Delete a product
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: string
+          required: true
+          description: ID of the product to delete
+      responses:
+        '200':
+          description: Product deleted successfully
